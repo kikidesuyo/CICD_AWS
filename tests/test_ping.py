@@ -4,7 +4,7 @@ import time
 def test_api_reachability():
     start_time = time.time()  # テスト開始時間を記録
     try:
-        response = requests.get("https://www.google.com")  # Googleのエンドポイントに変更
+        response = requests.get("https://www.google.com")  # Googleのエンドポイント
         assert response.status_code == 200
     except Exception as e:
         print(f"Error occurred: {e}")
