@@ -14,7 +14,7 @@ phases:
     commands:
       - python tests/test_ping.py  # テストを直接実行
       - echo Uploading duration to S3...
-      - aws s3 cp test_duration.txt s3://cicd-kiki-bucket/test_duration.txt  # S3にアップロード
+      - aws s3 cp test_duration.txt https://cicd-kiki-bucket.s3.ap-northeast-1.amazonaws.com/test_duration.txt  # S3にアップロード
   post_build:
     commands:
       - echo Tests completed
