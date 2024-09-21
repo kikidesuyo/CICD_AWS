@@ -3,8 +3,27 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo Testing internet connection...
-      - curl -I https://www.google.com  # Googleに接続を試みる
+      - echo Installing dependencies...
+      - yum install -y epel-release  # EPELリポジトリを有効化
+      - yum install -y unzip wget  # unzipとwgetをインストール
+      - wget https://chromedriver.storage.googleapis.com/2.46/chromedriver_linux64.zip  # ChromeDriverをダウンロード
+      - unzip chromedriver_linux64.zip -d /usr/local/bin/  # 解凍して適切な場所に配置
+      - chmod +x /usr/local/bin/chromedriver  # 実行権限を追加
+      - yum install -y chromium  # Chromiumをインストール
+  pre_build:
+    commands:
+      - echo Running tests...
+      - python selenium_test.py  # Seleniumテストスクリプトの実行
   build:
     commands:
-      - echo Internet connection test completed.
+      - echo Building the application...
+      - npm run build
+  post_build:
+    commands:
+      - echo Build completed successfully
+      - echo Uploading screenshot to S3...
+      - aws s3 cp search_results.png s3://your-s3-bucket-name/
+artifacts:
+  files:
+    - '**/*'
+  base-directory: build
