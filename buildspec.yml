@@ -2,30 +2,9 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      python: 3.8
     commands:
-      - echo Installing dependencies...
-      - pip install -r requirements.txt
-      - yum install -y wget  # wgetが必要な場合
-      - wget https://chromedriver.storage.googleapis.com/2.46/chromedriver_linux64.zip  # ChromeDriverをダウンロード
-      - unzip chromedriver_linux64.zip -d /usr/local/bin/  # 解凍して適切な場所に配置
-      - chmod +x /usr/local/bin/chromedriver  # 実行権限を追加
-      - yum install -y chromium  # Chromiumをインストール
-  pre_build:
-    commands:
-      - echo Running tests...
-      - python selenium_test.py  # Seleniumテストスクリプトの実行
+      - echo Testing internet connection...
+      - curl -I https://www.google.com  # Googleに接続を試みる
   build:
     commands:
-      - echo Building the application...
-      - npm run build
-  post_build:
-    commands:
-      - echo Build completed successfully
-      - echo Uploading screenshot to S3...
-      - aws s3 cp search_results.png s3://your-s3-bucket-name/
-artifacts:
-  files:
-    - '**/*'
-  base-directory: build
+      - echo Internet connection test completed.
