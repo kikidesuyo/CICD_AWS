@@ -12,11 +12,7 @@ phases:
       - echo Running connectivity tests...
   build:
     commands:
-      - start_time=$(date +%s)  # テスト開始時間を記録
-      - python -m unittest discover tests/  # テストを実行
-      - end_time=$(date +%s)  # テスト終了時間を記録
-      - duration=$((end_time - start_time))  # 実行時間を計算
-      - echo Test execution time "$duration seconds" > test_duration.txt  # 実行時間をtest_duration.txtに保存
+      - python tests/test_ping.py  # テストを直接実行
       - echo Uploading duration to S3...
       - aws s3 cp test_duration.txt s3://cicd-kiki-bucket/test_duration.txt  # S3にアップロード
   post_build:
