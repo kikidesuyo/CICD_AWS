@@ -8,6 +8,7 @@ import boto3
 
 # ヘッドレスモードでChromeを起動
 options = webdriver.ChromeOptions()
+options.binary_location = "/usr/local/bin/chrome-linux/chrome-linux/chrome"  # 実行ファイルのパスを指定
 options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
