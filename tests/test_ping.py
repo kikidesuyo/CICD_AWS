@@ -18,4 +18,4 @@ class TestAPIAccess(unittest.TestCase):
             print(f"Test execution time: {duration:.2f} seconds")  # 実行時間を表示
             with open('test_duration.txt', 'w') as f:
                 f.write(f"Test execution time: {duration:.2f} seconds\n")  # 実行時間をファイルに保存
-                print("test_duration.txt created successfully.")  # ファイル作成確認メッセージ developer
+                print("test_duration.txt created successfully.")  # ファイル作成確認メッセージ developer-add
