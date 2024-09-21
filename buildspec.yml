@@ -7,8 +7,11 @@ phases:
     commands:
       - echo Installing dependencies...
       - pip install -r requirements.txt
-      - yum install -y chromium-chromedriver  # Amazon Linuxの場合のインストール
-      - export PATH=$PATH:/usr/lib/chromium-browser  # 必要に応じてパスを追加
+      - yum install -y wget  # wgetが必要な場合
+      - wget https://chromedriver.storage.googleapis.com/2.46/chromedriver_linux64.zip  # ChromeDriverをダウンロード
+      - unzip chromedriver_linux64.zip -d /usr/local/bin/  # 解凍して適切な場所に配置
+      - chmod +x /usr/local/bin/chromedriver  # 実行権限を追加
+      - yum install -y chromium  # Chromiumをインストール
   pre_build:
     commands:
       - echo Running tests...
