@@ -6,26 +6,22 @@ phases:
       python: 3.8
     commands:
       - echo Installing dependencies...
-      - pip install -r requirements.txt  # 依存関係のインストール
-      - apt-get update && apt-get install -y chromium-chromedriver
-      - export PATH=$PATH:/usr/lib/chromium-browser
-
+      - pip install -r requirements.txt
+      - yum install -y chromium-chromedriver  # Amazon Linuxの場合のインストール
+      - export PATH=$PATH:/usr/lib/chromium-browser  # 必要に応じてパスを追加
   pre_build:
     commands:
-      - echo Running Google search test...
+      - echo Running tests...
       - python selenium_test.py  # Seleniumテストスクリプトの実行
-
   build:
     commands:
       - echo Building the application...
-      - npm run build  # 必要に応じてビルドコマンドを追加
-
+      - npm run build
   post_build:
     commands:
       - echo Build completed successfully
       - echo Uploading screenshot to S3...
-      - aws s3 cp search_results.png s3://your-s3-bucket-name/  # スクリーンショットをS3にアップロード
-
+      - aws s3 cp search_results.png s3://your-s3-bucket-name/
 artifacts:
   files:
     - '**/*'
