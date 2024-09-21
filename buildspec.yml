@@ -4,8 +4,9 @@ phases:
   install:
     commands:
       - echo Installing dependencies...
-      - yum install -y epel-release  # EPELリポジトリを追加
       - yum install -y wget unzip  # wgetとunzipをインストール
+      - wget https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm  # EPELリポジトリをダウンロード
+      - yum install -y epel-release-7-11.noarch.rpm  # ダウンロードしたEPELをインストール
       - yum install -y chromium  # Chromiumをインストール
       - yum install -y chromium-chromedriver  # ChromeDriverをインストール
       - pip install -r requirements.txt  # Pythonの依存関係をインストール
@@ -21,7 +22,7 @@ phases:
     commands:
       - echo Build completed successfully
       - echo Uploading screenshot to S3...
-      - aws s3 cp search_results.png s3://your-s3-bucket-name/
+      - aws s3 cp search_results.png s3://cicd-kiki-bucket/
 artifacts:
   files:
     - '**/*'
