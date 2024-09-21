@@ -5,10 +5,13 @@ phases:
     commands:
       - echo Installing dependencies...
       - yum install -y wget unzip  # wgetとunzipをインストール
-      - wget https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm  # EPELリポジトリをダウンロード
-      - yum install -y epel-release-7-11.noarch.rpm  # ダウンロードしたEPELをインストール
-      - yum install -y chromium  # Chromiumをインストール
-      - yum install -y chromium-chromedriver  # ChromeDriverをインストール
+      - echo Downloading ChromeDriver...
+      - wget https://chromedriver.storage.googleapis.com/2.46/chromedriver_linux64.zip  # ChromeDriverをダウンロード
+      - unzip chromedriver_linux64.zip -d /usr/local/bin/  # 解凍して適切な場所に配置
+      - chmod +x /usr/local/bin/chromedriver  # 実行権限を追加
+      - echo Downloading Chromium...
+      - wget https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/c/chromium-*.rpm  # 正しいバージョンを確認し、適切なURLを指定
+      - yum install -y chromium-*.rpm  # ダウンロードしたRPMをインストール
       - pip install -r requirements.txt  # Pythonの依存関係をインストール
   pre_build:
     commands:
@@ -22,7 +25,7 @@ phases:
     commands:
       - echo Build completed successfully
       - echo Uploading screenshot to S3...
-      - aws s3 cp search_results.png s3://cicd-kiki-bucket/
+      - aws s3 cp search_results.png s3://your-s3-bucket-name/
 artifacts:
   files:
     - '**/*'
