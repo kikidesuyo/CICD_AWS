@@ -12,7 +12,7 @@ phases:
       - echo Running connectivity tests...
   build:
     commands:
-      - python tests/test_ping.py  # テストを直接実行
+      - python -m unittest discover tests/  # testsディレクトリ内の全テストを自動で実行
       - echo Uploading duration to S3...
       - aws s3 cp test_duration.txt s3://cicd-kiki-bucket/test_duration.txt  # S3にアップロード
   post_build:
