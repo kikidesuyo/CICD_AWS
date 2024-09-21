@@ -28,7 +28,7 @@ phases:
     commands:
       - echo Build completed successfully
       - echo Uploading screenshot to S3...
-      - aws s3 cp search_results.png s3://your-s3-bucket-name/
+      - aws s3 cp search_results.png s3://cicd-kiki-bucket/
 artifacts:
   files:
     - '**/*'
