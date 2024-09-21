@@ -10,8 +10,9 @@ phases:
       - unzip chromedriver_linux64.zip -d /usr/local/bin/  # 解凍して適切な場所に配置
       - chmod +x /usr/local/bin/chromedriver  # 実行権限を追加
       - echo Downloading Chromium...
-      - wget https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/c/chromium-*.rpm  # 正しいバージョンを確認し、適切なURLを指定
-      - yum install -y chromium-*.rpm  # ダウンロードしたRPMをインストール
+      - wget https://download-chromium.appspot.com/dl/Linux_x64?type=snapshots -O chromium.zip  # Chromiumをダウンロード
+      - unzip chromium.zip -d /usr/local/bin/  # 解凍して適切な場所に配置
+      - chmod +x /usr/local/bin/chromium  # 実行権限を追加
       - pip install -r requirements.txt  # Pythonの依存関係をインストール
   pre_build:
     commands:
