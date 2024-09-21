@@ -4,12 +4,13 @@ phases:
   install:
     commands:
       - echo Installing dependencies...
-      - yum install -y epel-release  # EPELリポジトリを有効化
-      - yum install -y unzip wget  # unzipとwgetをインストール
+      - yum install -y wget unzip  # wgetとunzipをインストール
+      - wget https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/c/chromium-*.rpm  # Chromiumをダウンロード
+      - yum install -y chromium-*.rpm  # ダウンロードしたRPMをインストール
       - wget https://chromedriver.storage.googleapis.com/2.46/chromedriver_linux64.zip  # ChromeDriverをダウンロード
       - unzip chromedriver_linux64.zip -d /usr/local/bin/  # 解凍して適切な場所に配置
       - chmod +x /usr/local/bin/chromedriver  # 実行権限を追加
-      - yum install -y chromium  # Chromiumをインストール
+      - pip install -r requirements.txt  # Pythonの依存関係をインストール
   pre_build:
     commands:
       - echo Running tests...
