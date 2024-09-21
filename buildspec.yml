@@ -18,7 +18,7 @@ phases:
       - duration=$((end_time - start_time))  # 実行時間を計算
       - echo "Test execution time: $duration seconds" > test_duration.txt  # 実行時間をファイルに保存
       - echo Uploading duration to S3...
-      - aws s3 cp test_duration.txt s3://cicd-kiki-bucket/test_duration.txt  # S3にアップロード
+      - aws s3 cp test_duration.txt s3://cicd-kiki-bucket/test_duration.txt  # S3にアップ
   post_build:
     commands:
       - echo Tests completed
