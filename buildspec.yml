@@ -2,34 +2,23 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      python: 3.x  # Pythonのバージョンを指定
     commands:
       - echo Installing dependencies...
-      - yum install -y wget unzip  # wgetとunzipをインストール
-      - echo Downloading ChromeDriver...
-      - wget https://chromedriver.storage.googleapis.com/2.46/chromedriver_linux64.zip  # ChromeDriverをダウンロード
-      - unzip chromedriver_linux64.zip -d /usr/local/bin/  # ChromeDriverを解凍
-      - chmod +x /usr/local/bin/chromedriver  # 実行権限を追加
-      - echo Downloading Chromium...
-      - wget https://download-chromium.appspot.com/dl/Linux_x64?type=snapshots -O chromium.zip  # Chromiumをダウンロード
-      - unzip chromium.zip -d /usr/local/bin/chrome-linux  # 解凍先を指定
-      - echo Listing Chromium files...
-      - ls /usr/local/bin/chrome-linux/chrome-linux  # 解凍したファイルを確認
-      - chmod +x /usr/local/bin/chrome-linux/chrome-linux/chrome  # 正しいバイナリに実行権限を追加
-      - pip install -r requirements.txt  # Pythonの依存関係をインストール
+      - pip install -r requirements.txt  # 依存関係をインストール
   pre_build:
     commands:
-      - echo Running tests...
-      - python selenium_test.py  # Seleniumテストスクリプトの実行
+      - echo Running connectivity tests...
   build:
     commands:
-      - echo Building the application...
-      - npm run build
+      - start_time=$(date +%s)  # テスト開始時間を記録
+      - python -m unittest discover tests/  # テストを実行
+      - end_time=$(date +%s)  # テスト終了時間を記録
+      - duration=$((end_time - start_time))  # 実行時間を計算
+      - echo "Test execution time: $duration seconds" > test_duration.txt  # 実行時間をファイルに保存
+      - echo Uploading duration to S3...
+      - aws s3 cp test_duration.txt s3://cicd-kiki-bucket/test_duration.txt  # S3にアップロード
   post_build:
     commands:
-      - echo Build completed successfully
-      - echo Uploading screenshot to S3...
-      - aws s3 cp search_results.png s3://cicd-kiki-bucket/
-artifacts:
-  files:
-    - '**/*'
-  base-directory: build
+      - echo Tests completed
