@@ -12,8 +12,8 @@ phases:
       - echo Downloading Chromium...
       - wget https://download-chromium.appspot.com/dl/Linux_x64?type=snapshots -O chromium.zip  # Chromiumをダウンロード
       - unzip chromium.zip -d /usr/local/bin/chrome-linux  # 解凍先を指定
-      - ls /usr/local/bin/chrome-linux  # 解凍したファイルを確認
-      - chmod +x /usr/local/bin/chrome-linux/chrome  # 正しいバイナリに実行権限を追加
+      - ls /usr/local/bin/chrome-linux/chrome-linux  # 解凍したファイルを確認
+      - chmod +x /usr/local/bin/chrome-linux/chrome-linux/<correct_executable>  # 正しいバイナリに実行権限を追加
       - pip install -r requirements.txt  # Pythonの依存関係をインストール
   pre_build:
     commands:
